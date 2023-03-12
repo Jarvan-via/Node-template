@@ -6,7 +6,7 @@ import env from './src/utils/env';
 import { Service } from './src/types/common';
 import logger from './src/utils/logger';
 
-axios.defaults.timeout = 20000;
+axios.defaults.timeout = 200000;
 
 const servicesConf = config.SERVICE;
 
