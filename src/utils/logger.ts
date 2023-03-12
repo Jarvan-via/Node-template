@@ -16,13 +16,12 @@ const normal = {
   pattern: 'yyyyMMdd',
   keepFileExt: true,
   alwaysIncludePattern: true,
-  level: 'info',
-  maxLevel: 'info',
-  numBackups: 7
+  level: 'INFO',
+  numBackups: 7,
 };
 
-const justError = {
-  type: 'logLevelFilter',
+const emergencies = { 
+  type: 'file', 
   filename: `${config.LOG_PATH}/${config.SERVICE_NAME}.error.log`,
   layout: {
     type: 'pattern',
@@ -31,18 +30,26 @@ const justError = {
   pattern: 'yyyyMMdd',
   keepFileExt: true,
   alwaysIncludePattern: true,
-  level: "error",
-}
+  level: 'error',
+  numBackups: 7,
+};
+
+const justError = {
+  type: 'logLevelFilter',
+  level: 'error',
+  appender: 'emergencies',
+};
 
 
-const logger = log4js.getLogger(config.SERVICE_NAME);
 
 const targetType = config.NODE_ENV === 'dev' ? 'console' : 'normal';
 
 log4js.configure({
-  appenders: { console, normal, justError },
+  appenders: { console, normal, justError, emergencies },
   categories: { default: { appenders: ['justError', targetType], level: 'ALL' } },
 });
 
-export const getLogger = (name: string) => log4js.getLogger(name)
+const logger = log4js.getLogger(config.SERVICE_NAME);
+export const getLogger = (name: string) => log4js.getLogger(name);
+
 export default logger;
