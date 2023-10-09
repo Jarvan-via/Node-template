@@ -84,7 +84,7 @@ async function sleep(time: number) {
 
 const handler = function handler<T>({ data: { code, message, data } }: AxiosResponse<HttpResponseBase<T>>): T {
   if (code !== Err.CODE.SUCCESS && code !== Err.CODE.NOT_EXISTS && code !== 200) {
-    throw Err(code, null, message);
+    throw new Err(code, null, message);
   }
   return data;
 };
