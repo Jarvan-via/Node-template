@@ -20,10 +20,10 @@ export default async function init() {
   env._redis = new Redis({ 
     host: config.REDIS_HOST, 
     port: config.REDIS_PORT, 
-    // reconnectOnError: function(e) {
-    //   logger.error(e)
-    //   return false
-    // },
-    retryStrategy: () => null
+    reconnectOnError: function (e) {
+      logger.error(e);
+      return false;
+    },
+    retryStrategy: () => null,
   });
 }
